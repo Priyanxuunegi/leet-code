@@ -1,0 +1,31 @@
+class Solution {
+public:
+
+    unordered_set<string> st ; 
+    unordered_map<int,bool> dp ; 
+
+
+    bool call(string s , int p){
+        if(p == s.size()) return true ; 
+        
+        if(dp.count(p))
+            return dp[p] ; 
+
+        for(int i = p ; i < s.size() ; i++){
+             if(st.count( s.substr(p , i - p + 1)) && call(s , i+1)) // here we are checking if substring is present in our set(dictionatory) and call for i+1 substring checking(other substring is present or not int set via recursion.
+                return dp[p] = true  ;
+        }
+      
+      return dp[p] = false ; 
+    }
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+        
+        for(auto a : wordDict){
+            st.insert(a) ; 
+        }
+
+        return call(s,0) ; 
+
+    }
+};
